@@ -23,7 +23,10 @@ let databse = {
       console.log("Database is up!")
     })
   },
-  retrieve: async function() {
+  retrieve: async function(id) {
+    return await db("todos").query("select").where(["id", "=", id]).exec().then((item) => item)
+  },
+  retrieveAll: async function() {
     return await (db("todos").query("select").exec())
       .then((rows) => rows)
   },
