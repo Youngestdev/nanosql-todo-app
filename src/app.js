@@ -11,15 +11,38 @@ app.use(cors())
 database.start();
 
 app.get("/", (req, res) => {
-  database.retrieve().then((items) => {
+  database.retrieveAll().then((items) => {
     res.send(items)
   })
 });
 
+app.get("/:id", (req, res) => {
+  database.retrieve(req.params.id).then((item) => {
+    res.send(item)
+  })
+});
+
 app.post("/", async (req, res) => {
-  console.log(req.body)
   await database.insert(req.body.item).then(() => {    
-    res.status(200).send()
+    res.status(200).send("You have successfully added a new todo.")
+  })
+})
+
+app.delete("/del/:id", async (req, res) => {
+  await database.delete(req.params.id).then(() => {
+    res.status(200).send(`Todo item ${req.params.id} has been successfully deleted.`)
+  })
+})
+
+app.put("/update/:id", async (req, res) => {
+  await database.update(req.params.id, req.body.item).then(() => {
+    res.status(200).send(`Todo item ${req.params.id} has been updated successfully.`)
+  })
+})
+
+app.delete("/delete", async (req, res) => {
+  await database.deleteAll().then(() => {
+    res.status(200).send(`All todo items have been deleted.`)
   })
 })
 
