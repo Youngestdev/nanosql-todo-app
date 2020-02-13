@@ -14,8 +14,7 @@ let databse = {
           name: "todos",
           model: {
             "id:uuid": {pk: true},
-            "item:string": {},
-            "status:int": {}  // Idk what to do with this yet tho, lol.
+            "item:string": {},            
           }
         }
       ],
@@ -29,9 +28,24 @@ let databse = {
       .then((rows) => rows)
   },
   insert: async function(item) {
-      return await db("todos").query("upsert", {item: item}).exec();
+    return await db("todos").query("upsert", {item: item}).exec();
   },
-
+  update: async function(id, item) {
+    await db("todos").query("upsert", {item: item}).where(["id", "=", id]).stream((row) => {
+      console.log(row)
+    }, () => {
+      console.log("done")
+      // await this.delete(id)
+    }, (err) => {
+      console.log(err)
+    })
+  },
+  delete: async function(id) {
+    return await db("todos").query("delete").where(["id", "=", id]).exec();
+  },
+  deleteAll: async function() {
+    return await db("todos").query("delete").exec();
+  },
 }
 
 
