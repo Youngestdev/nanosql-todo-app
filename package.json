@@ -11,6 +11,7 @@
   "author": "Abdulazeez Abdulazeez Adeshina <laisibizness@gmail.com> (github.com/Youngestdev)",
   "license": "MIT",
   "dependencies": {
+    "@nano-sql/adapter-mongo": "^2.0.2",
     "@nano-sql/core": "^2.3.7",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
