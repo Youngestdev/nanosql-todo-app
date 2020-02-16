@@ -1,4 +1,5 @@
 const nSQL = require("@nano-sql/core");
+const { MongoDB } = require("@nano-sql/adapter-mongo");
 
 const db = nSQL.nSQL;
 
@@ -8,7 +9,7 @@ let databse = {
   start: async function() {
     return await db().createDatabase({
       id: "todo_list",
-      mode: "PERM",
+      mode: new MongoDB("mongodb://localhost:27017"),
       tables: [
         {
           name: "todos",
